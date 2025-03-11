@@ -4,7 +4,19 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "ts-node-dev --respawn --transpile-only src/log.ts"
+    "dev": "ts-node-dev --respawn --transpile-only src/raw-query.ts",
+    "format": "npx prisma format",
+    "validate": "npx prisma validate",
+    "migrate": "npx prisma migrate dev",
+    "studio": "npx prisma studio",
+    "generate": "npx prisma generate",
+    "seed": "npx prisma db seed --preview-feature",
+    "pull": "npx prisma db pull --print",
+    "push": "npx prisma db push",
+    "reset": "npx prisma migrate reset --preview-feature",
+    "deploy": "npx prisma migrate deploy --preview-feature",
+    "introspect": "npx prisma introspect --preview-feature",
+    "allPrismaCommand": "npx prisma"
   },
   "keywords": [],
   "author": "",

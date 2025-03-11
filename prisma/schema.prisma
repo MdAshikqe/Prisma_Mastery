@@ -13,59 +13,60 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-model Post{
-  id Int @id @default(autoincrement())
-  title String
-  content String
-  published Boolean @default(false)
-  authtorId Int
-  author User @relation(fields: [authtorId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model Post {
+  id             Int            @id @default(autoincrement())
+  title          String
+  content        String
+  published      Boolean        @default(false)
+  authtorId      Int
+  author         User           @relation(fields: [authtorId], references: [id])
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
   postCategories PostCatagory[] // Add this line to create the opposite relation field
- 
 
   @@map("posts")
 }
 
-model User{
-  id Int @id @default(autoincrement())
-  name String 
-  email String
-  role UserRole @default(user)
+model User {
+  id      Int      @id @default(autoincrement())
+  name    String
+  email   String
+  age     Int      @default(15)
+  role    UserRole @default(user)
   profile Profile? //one to one relation profile
-  posts Post[] //one to many relation posts
+  posts   Post[] //one to many relation posts
+
   @@map("users")
 }
 
-model Profile{
- id Int @id @default(autoincrement())
- bio String?
- userId Int @unique
- user User @relation(fields: [userId], references: [id]) //one to one relation user
- 
- @@map("profiles")
+model Profile {
+  id     Int     @id @default(autoincrement())
+  bio    String?
+  userId Int     @unique
+  user   User    @relation(fields: [userId], references: [id]) //one to one relation user
+
+  @@map("profiles")
 }
 
-model Catagory{
-  id Int @id @default(autoincrement())
-  name String
+model Catagory {
+  id             Int            @id @default(autoincrement())
+  name           String
   postCategories PostCatagory[] // Add this line to create the opposite relation field
+
   @@map("catagories")
 }
 
-
-model PostCatagory{
-  postId Int
-  post Post @relation(fields: [postId], references: [id])
+model PostCatagory {
+  postId     Int
+  post       Post     @relation(fields: [postId], references: [id])
   catagoryId Int
-catagory Catagory @relation(fields: [catagoryId], references: [id])
-@@id([postId, catagoryId])
-@@map("postCatagories")
+  catagory   Catagory @relation(fields: [catagoryId], references: [id])
+
+  @@id([postId, catagoryId])
+  @@map("postCatagories")
 }
 
-enum UserRole{
+enum UserRole {
   user
   admin
 }
